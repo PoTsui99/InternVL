@@ -506,7 +506,7 @@ def preprocess_internlm(
 def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_size):
     best_ratio_diff = float('inf')
     best_ratio = (1, 1)
-    area = width * height
+    area = width * height  # 原始图像的宽和高
     for ratio in target_ratios:
         target_aspect_ratio = ratio[0] / ratio[1]
         ratio_diff = abs(aspect_ratio - target_aspect_ratio)
@@ -514,7 +514,7 @@ def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_
             best_ratio_diff = ratio_diff
             best_ratio = ratio
         elif ratio_diff == best_ratio_diff:
-            if area > 0.5 * image_size * image_size * ratio[0] * ratio[1]:
+            if area > 0.5 * image_size * image_size * ratio[0] * ratio[1]:  # 不能将原始图片切得太细?
                 best_ratio = ratio
     # print(f'width: {width}, height: {height}, best_ratio: {best_ratio}')
     return best_ratio
